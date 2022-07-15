@@ -13,10 +13,14 @@ def searchAndSave(r):
 
     parse = BeautifulSoup(response.content,'html.parser')
     status = parse.find('div', {"class":"b_focusTextSmall"})
-    print(status.text)
-    print(sheet.max_row)
-    row = "B"+str(r)
-    sheet[row].value = status.text.split(":")[0]
+    if status is not None:
+        print(status.text)
+        print(sheet.max_row)
+        row = "B"+str(r)
+        if status.text.split(":")[0] != "Delivered":
+            sheet[row].value = "UnDelivered"
+        else:
+            sheet[row].value = status.text.split(":")[0]
 
 #Variables-------
 trackingNoRow = "A"
